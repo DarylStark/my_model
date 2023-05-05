@@ -22,9 +22,6 @@
     ],
     // Python unit testing
     "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [
-        "${workspaceFolder}/tests/"
-    ],
     "python.testing.unittestEnabled": false,
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8"
