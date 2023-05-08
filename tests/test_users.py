@@ -20,6 +20,29 @@ def example_user_no_second_factor() -> User:
     return user
 
 
+def test_users_wrong_username():
+    """ Unit test to check if usernames that are invalid fail """
+
+    # List with wrong usernames
+    wrong_usernames = [
+        '', 'user name', 'user+name',
+        'user@domain.example', '1username', '_username',
+        '-username'
+    ]
+
+    # Loop through them and make sure they fail
+    for wrong_username in wrong_usernames:
+        with raises(ValueError):
+            User(
+                created=datetime.now(),
+                fullname='Fake fullname',
+                username=wrong_username,
+                email='fakse@fake.example',
+                password_hash='xxxxx',
+                password_date=datetime.now(),
+                second_factor=None)
+
+
 def test_users_correct_credentials(example_user_no_second_factor: User):
     """ Test if credentials can be set and verified """
 
