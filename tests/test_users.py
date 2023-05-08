@@ -49,7 +49,7 @@ def test_users_correct_credentials(example_user_no_second_factor: User):
     # Test username/password combination
     assert example_user_no_second_factor.verify_credentials(
         username='fake.user',
-        password='testtest')
+        password='testtest'),  "Credential verification failed (without second factor)"
 
     # Create a OTP for the user
     otp_secret = example_user_no_second_factor.set_random_second_factor()
@@ -58,7 +58,7 @@ def test_users_correct_credentials(example_user_no_second_factor: User):
     assert example_user_no_second_factor.verify_credentials(
         username='fake.user',
         password='testtest',
-        second_factor=TOTP(otp_secret).now())
+        second_factor=TOTP(otp_secret).now()), "Credential verification failed (with second factor)"
 
 
 def test_users_incorrect_credentials(example_user_no_second_factor: User):
@@ -67,7 +67,7 @@ def test_users_incorrect_credentials(example_user_no_second_factor: User):
     # Test username/password combination
     assert not example_user_no_second_factor.verify_credentials(
         username='fake.user',
-        password='somethingelse')
+        password='somethingelse'), "Credential didn't fail when they should've (without second factor)"
 
     # Create a OTP for the user
     _ = example_user_no_second_factor.set_random_second_factor()
@@ -76,4 +76,4 @@ def test_users_incorrect_credentials(example_user_no_second_factor: User):
     assert not example_user_no_second_factor.verify_credentials(
         username='fake.user',
         password='testtest',
-        second_factor='alsowrong')
+        second_factor='alsowrong'), "Credential didn't fail when they should've (with second factor)"
