@@ -20,7 +20,7 @@ def example_user_no_second_factor() -> User:
     return user
 
 
-def test_users_wrong_username():
+def test_user_wrong_username():
     """ Unit test to check if usernames that are invalid fail """
 
     # List with wrong usernames
@@ -43,7 +43,7 @@ def test_users_wrong_username():
                 second_factor=None)
 
 
-def test_users_correct_credentials(example_user_no_second_factor: User):
+def test_user_correct_credentials(example_user_no_second_factor: User):
     """ Test if credentials can be set and verified """
 
     # Test username/password combination
@@ -61,7 +61,7 @@ def test_users_correct_credentials(example_user_no_second_factor: User):
         second_factor=TOTP(otp_secret).now()), "Credential verification failed (with second factor)"
 
 
-def test_users_incorrect_credentials(example_user_no_second_factor: User):
+def test_user_incorrect_credentials(example_user_no_second_factor: User):
     """ Test if wrong credentials result in error """
 
     # Test username/password combination

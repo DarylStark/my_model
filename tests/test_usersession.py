@@ -8,7 +8,7 @@ def example_user_session() -> UserSession:
     return usersession
 
 
-def test_random_secret_length(example_user_session: UserSession):
+def test_usersession_random_secret_length(example_user_session: UserSession):
     """ Unit test to check if the generated secret length is
         correct """
 
