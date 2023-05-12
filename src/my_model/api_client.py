@@ -2,7 +2,7 @@ import random
 import string
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validate_arguments
 
 
 class APIClient(BaseModel):
@@ -22,6 +22,9 @@ class APIClient(BaseModel):
         min_length=32,
         max_length=32,
         regex='^[a-zA-Z0-9]{32}$')
+
+    class Config:
+        validate_assignment = True
 
     def set_random_token(self, force: bool = False) -> str:
         """ Method to generate a random token for this API token """

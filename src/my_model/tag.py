@@ -10,3 +10,6 @@ class Tag(BaseModel):
     title: str = Field(max_length=128)
     color: str | None = Field(
         default=None, regex=r'^[a-fA-F0-9]{6}$', min_length=6, max_length=6)
+
+    class Config:
+        validate_assignment = True

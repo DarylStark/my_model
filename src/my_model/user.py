@@ -20,15 +20,18 @@ class User(BaseModel):
 
     created: datetime = Field(default_factory=datetime.utcnow)
     fullname: str = Field(regex=r'^[A-Za-z\- ]+$', max_length=128)
-    username: str = Field(regex=r'^[a-zA-Z][a-zA-Z0-9_.]+$', max_length=128)
+    username: str = Field(regex=r'^[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
     email: str = Field(
-        regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+', max_length=128)
+        regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
     role: UserRole = Field(default=UserRole.user)
     password_hash: str
     password_date: datetime = Field(default_factory=datetime.utcnow)
     second_factor: None | str = Field(
         default=None,
-        regex=r'[A-Z0-9]+', max_length=64)
+        regex=r'^[A-Z0-9]+$', max_length=64)
+
+    class Config:
+        validate_assignment = True
 
     def set_password(self, password: str) -> bool:
         """ Sets the password for the user """

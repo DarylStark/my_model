@@ -1,4 +1,5 @@
 from datetime import datetime
+from multiprocessing import Value
 
 from pyotp import TOTP
 from pytest import fixture, raises
@@ -10,6 +11,32 @@ from my_model.api_client import APIClient
 def example_api_client() -> APIClient:
     client = APIClient(app_name='testapp', app_publisher='Daryl Stark')
     return client
+
+
+def test_api_client_token_regex(example_api_client: APIClient) -> None:
+    """ Unit test to test the regex for tokens """
+
+    # Invalid tokens
+    with raises(ValueError):
+        example_api_client.token = 'abcdefghijklmnopqrstuvwxyz'
+        example_api_client.token = 'xyz'
+        example_api_client.token = 'qwertyuiopASDFGHJKLzxcvbnm--909'
+
+    # Valid tokens
+    example_api_client.token = 'qwertyuiopASDFGHJKLzxcvbnm009909'
+
+
+def test_api_client_url_regex(example_api_client: APIClient) -> None:
+    """ Unit test to test the regex for tokens """
+
+    # Invalid URLs
+    with raises(ValueError):
+        example_api_client.redirect_url = 'http:/example.com/api?redirect=1'
+        example_api_client.redirect_url = 'https:/example.com/api?redirect=1'
+
+    # Valid URLs
+    example_api_client.redirect_url = 'http://example.com/api?redirect=1'
+    example_api_client.redirect_url = 'https://example.com/api?redirect=1'
 
 
 def test_api_client_random_token(example_api_client: APIClient) -> None:

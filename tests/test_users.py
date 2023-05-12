@@ -20,7 +20,26 @@ def example_user_no_second_factor() -> User:
     return user
 
 
-def test_user_wrong_username():
+def test_user_fullname_regex(example_user_no_second_factor: User):
+    """ Unit test to check if fullnames that are invalid fail """
+
+    # List with wrong full names
+    wrong_full_names = [
+        '', 'Daryl1', 'Daryl_Stark', 'Emilia_Clarke'
+    ]
+
+    # Loop through them and make sure they fail
+    for wrong_username in wrong_full_names:
+        with raises(ValueError):
+            example_user_no_second_factor.fullname = wrong_username
+
+    # Test correct username
+    example_user_no_second_factor.fullname = 'Daryl Stark'
+    example_user_no_second_factor.fullname = 'Emilia Clarke'
+    example_user_no_second_factor.fullname = 'Emilia-Clarke'
+
+
+def test_user_username_regex(example_user_no_second_factor: User):
     """ Unit test to check if usernames that are invalid fail """
 
     # List with wrong usernames
@@ -33,14 +52,51 @@ def test_user_wrong_username():
     # Loop through them and make sure they fail
     for wrong_username in wrong_usernames:
         with raises(ValueError):
-            User(
-                created=datetime.now(),
-                fullname='Fake fullname',
-                username=wrong_username,
-                email='fakse@fake.example',
-                password_hash='xxxxx',
-                password_date=datetime.now(),
-                second_factor=None)
+            example_user_no_second_factor.username = wrong_username
+
+    # Test correct username
+    example_user_no_second_factor.username = 'daryl.stark'
+    example_user_no_second_factor.username = 'emilia.clarke'
+    example_user_no_second_factor.username = 'emilia_clarke'
+
+
+def test_user_email_regex(example_user_no_second_factor: User):
+    """ Unit test to check if emailaddresses that are invalid fail """
+
+    # List with wrong emailaddress
+    wrong_mail = [
+        '', 'fake_mail', 'daryl@daryl'
+    ]
+
+    # Loop through them and make sure they fail
+    for wrong_address in wrong_mail:
+        with raises(ValueError):
+            example_user_no_second_factor.email = wrong_address
+
+    # Test correct username
+    example_user_no_second_factor.email = 'daryl.stark@dstark.nl'
+    example_user_no_second_factor.email = 'emilia.clarke@dstark.nl'
+    example_user_no_second_factor.email = 'emilia_clarke@dstark.co.uk'
+
+
+def test_user_second_factor_regex(example_user_no_second_factor: User):
+    """ Unit test to check if second factors that are invalid fail
+    """
+
+    # List with wrong second factors
+    wrong_second_factors = [
+        'ape', 'daryl', '123ape'
+    ]
+
+    # Loop through them and make sure they fail
+    for wrong_second_factors in wrong_second_factors:
+        with raises(ValueError):
+            example_user_no_second_factor.second_factor = wrong_second_factors
+
+    # Test correct username
+    example_user_no_second_factor.second_factor = 'ABCDEFG'
+    example_user_no_second_factor.second_factor = '123ABCEF'
+    example_user_no_second_factor.second_factor = 'HIJKLMN'
 
 
 def test_user_correct_credentials(example_user_no_second_factor: User):

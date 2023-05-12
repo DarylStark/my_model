@@ -7,6 +7,9 @@ class APIScope(BaseModel):
     module: str = Field(max_length=32)
     subject: str = Field(max_length=32)
 
+    class Config:
+        validate_assignment = True
+
     @property
     def full_scope_name(self) -> str:
         """ Method that creates a 'full API scope' object. """

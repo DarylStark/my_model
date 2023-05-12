@@ -13,6 +13,9 @@ class UserSession(BaseModel):
     title: str | None = Field(default=None, max_length=128)
     host: str | None = Field(default=None, max_length=128)
 
+    class Config:
+        validate_assignment = True
+
     def set_random_secret(
             self,
             min_length: int = 32,

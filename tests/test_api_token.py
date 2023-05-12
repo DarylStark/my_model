@@ -12,6 +12,19 @@ def example_api_token() -> APIToken:
     return token
 
 
+def test_api_token_token_regex(example_api_token: APIToken) -> None:
+    """ Unit test to test the regex for tokens """
+
+    # Invalid tokens
+    with raises(ValueError):
+        example_api_token.token = 'abcdefghijklmnopqrstuvwxyz'
+        example_api_token.token = 'xyz'
+        example_api_token.token = 'qwertyuiopASDFGHJKLzxcvbnm--909'
+
+    # Valid tokens
+    example_api_token.token = 'qwertyuiopASDFGHJKLzxcvbnm009909'
+
+
 def test_api_token_random_token(example_api_token: APIToken) -> None:
     """ Unit test to see if we can set a random token """
 

@@ -19,6 +19,9 @@ class APIToken(BaseModel):
         regex='^[a-zA-Z0-9]{32}$'
     )
 
+    class Config:
+        validate_assignment = True
+
     def set_random_token(self, force: bool = False) -> str:
         """ Method to generate a random token for this API token """
 
