@@ -15,4 +15,4 @@ jobs:
       - name: Install app requirements
         run: pip install -r src/requirements.txt
       - name: Run unit tests
-        run: pytest
+        run: python3 -m pytest
