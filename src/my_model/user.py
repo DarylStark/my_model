@@ -20,7 +20,7 @@ class User(BaseModel):
 
     created: datetime = Field(default_factory=datetime.utcnow)
     fullname: str = Field(regex=r'^[A-Za-z\- ]+$', max_length=128)
-    username: str = Field(regex=r'^Q[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
+    username: str = Field(regex=r'^[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
     email: str = Field(
         regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
     role: UserRole = Field(default=UserRole.user)
