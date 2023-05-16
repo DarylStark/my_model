@@ -15,7 +15,4 @@ jobs:
       - name: Install app requirements
         run: pip install -r src/requirements.txt
       - name: Run unit tests
-        uses: paolorechia/fast-pytest-github-action@develop
-        with:
-          pytest_args: "tests"
-          requirements_file: "src/requirements-tests.txt"
+        run: pytest
