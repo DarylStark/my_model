@@ -3,6 +3,7 @@ run-name: Execute unit tests
 on: [push]
 jobs:
   run-unit-tests:
+    name: Execute unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
