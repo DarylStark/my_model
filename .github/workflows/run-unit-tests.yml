@@ -1,0 +1,14 @@
+name: run-unit-tests
+run-name: Excuting unit tests
+on: [push]
+jobs:
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r requirements-dev.txt
+      - uses: paolorechia/fast-pytest-github-action@develop
