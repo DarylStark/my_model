@@ -1,5 +1,5 @@
-name: Test and deploy
-run-name: Test the code and deploy the library
+name: Unit test
+run-name: Unit testing
 on: [push]
 jobs:
   run-unit-tests:
