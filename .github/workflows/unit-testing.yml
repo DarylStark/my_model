@@ -1,5 +1,5 @@
-name: Unit test
-run-name: Unit testing
+name: Unit tests
+run-name: Execute unit tests
 on: [push]
 jobs:
   run-unit-tests:
