@@ -13,5 +13,5 @@ jobs:
       - run: pip install -r src/requirements.txt
       - uses: paolorechia/fast-pytest-github-action@develop
         with:
-          pytest_args: ""
+          pytest_args: "tests"
           requirements_file: "src/requirements-dev.txt"
