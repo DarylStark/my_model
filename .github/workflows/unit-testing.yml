@@ -23,6 +23,13 @@ jobs:
     name: Checking code quality
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
       - name: Install app requirements
         run: pip install -r pylint
       - name: PyLint
