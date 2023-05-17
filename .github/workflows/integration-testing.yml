@@ -37,6 +37,6 @@ jobs:
       - name: PyCodeStyle (source code)
         run: pycodestyle --show-pep8 src/
       - name: PyLint (source code)
-        run: pylint --errors-only src/
+        run: pylint src/
       - name: MyPy (source code)
         run: mypy src/
