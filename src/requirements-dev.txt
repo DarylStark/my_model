@@ -3,3 +3,5 @@ pycodestyle
 autopep8
 pylint
 mypy
+flake8
+pydocstyle

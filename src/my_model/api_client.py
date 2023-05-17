@@ -1,12 +1,24 @@
-import random
-import string
+"""Module that contains the class for a API clients."""
+
 from datetime import datetime
 
-from pydantic import BaseModel, Field, validate_arguments
+from pydantic import Field
+
+from ._token_object import TokenObject
 
 
-class APIClient(BaseModel):
-    """ Model for API clients """
+class APIClient(TokenObject):
+    """Model for API clients.
+
+    Class attributes:
+        created: the datetime when this client was created
+        expires: the datetime when this client will expire
+        enabled: defines it the client is enabled
+        app_name: the name for the app
+        app_publisher: the name for the publisher of the app
+        redirect_url: a URL where the user will be redirected after a token has
+            been granted. Can and should be used by web applications.
+    """
 
     created: datetime = Field(default_factory=datetime.utcnow)
     expires: datetime = Field(default_factory=datetime.utcnow)
@@ -17,28 +29,3 @@ class APIClient(BaseModel):
         default=None,
         regex='^https?://',
         max_length=1024)
-    token: str | None = Field(
-        default=None,
-        min_length=32,
-        max_length=32,
-        regex='^[a-zA-Z0-9]{32}$')
-
-    class Config:
-        validate_assignment = True
-
-    def set_random_token(self, force: bool = False) -> str:
-        """ Method to generate a random token for this API token """
-
-        if self.token is None or force:
-            # Generate random token
-            characters = string.ascii_letters
-            characters += string.digits
-            length = random.randint(32, 32)
-            random_token = [random.choice(characters)
-                            for i in range(0, length)]
-            random_token = ''.join(random_token)
-            self.token = random_token
-            return random_token
-
-        # Token was already set but force wasn't; raise an error
-        raise PermissionError('Token is already set')
