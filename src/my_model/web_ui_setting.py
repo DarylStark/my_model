@@ -1,11 +1,19 @@
-from pydantic import BaseModel, Field
+"""Module that contains the class for a API clients."""
+
+from pydantic import Field
+from ._model import Model
 
 
-class WebUISetting(BaseModel):
-    """ Model for Web UI settings """
+class WebUISetting(Model):
+    """Model for Web UI Settings.
+
+    The Web UI Settings model should be used by Web UIs that use this model to
+    set specific settings, like themes and notification settings.
+
+    Class attributes:
+        setting: the name of the setting
+        value: the value for the setting
+    """
 
     setting: str = Field(max_length=32)
     value: str = Field(max_length=32)
-
-    class Config:
-        validate_assignment = True

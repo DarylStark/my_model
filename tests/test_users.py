@@ -105,7 +105,7 @@ def test_user_correct_credentials(example_user_no_second_factor: User):
     # Test username/password combination
     assert example_user_no_second_factor.verify_credentials(
         username='fake.user',
-        password='testtest'),  "Credential verification failed (without second factor)"
+        password='testtest'), "Credential verification failed (without second factor)"
 
     # Create a OTP for the user
     otp_secret = example_user_no_second_factor.set_random_second_factor()
