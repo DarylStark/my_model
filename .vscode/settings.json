@@ -13,6 +13,8 @@
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.pycodestyleEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyCategorySeverity.note": "Information",
     // Python formatting
     "editor.formatOnSave": true,
     "python.formatting.provider": "none",

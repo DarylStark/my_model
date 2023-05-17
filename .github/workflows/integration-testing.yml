@@ -1,0 +1,42 @@
+name: Integration testing
+run-name: Integration testing
+on: [push]
+jobs:
+  unit-test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install app requirements
+        run: pip install -r src/requirements.txt
+      - name: Install dev requirements
+        run: pip install -r src/requirements-dev.txt
+      - name: Run unit tests
+        run: pytest
+  code-quality:
+    name: Code quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install app requirements
+        run: pip install -r src/requirements.txt
+      - name: Install dev requirements
+        run: pip install -r src/requirements-dev.txt
+      - name: PyCodeStyle (source code)
+        run: pycodestyle --show-pep8 src/
+      - name: PyLint (source code)
+        run: pylint --errors-only src/
+      - name: MyPy (source code)
+        run: mypy src/
