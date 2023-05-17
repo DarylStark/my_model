@@ -34,5 +34,7 @@ jobs:
         run: pip install -r src/requirements.txt
       - name: Install dev requirements
         run: pip install -r src/requirements-dev.txt
-      - name: PyLint
+      - name: PyCodeStyle (source code)
+        run: pycodestyle --show-pep8 src/
+      - name: PyLint (source code)
         run: pylint --errors-only src/
