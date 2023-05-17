@@ -49,7 +49,10 @@ class User(BaseModel):
         """ Disables the second factor for the user """
         self.second_factor = None
 
-    def verify_credentials(self, username: str, password: str, second_factor: str | None = None) -> bool:
+    def verify_credentials(self,
+                           username: str,
+                           password: str,
+                           second_factor: str | None = None) -> bool:
         """ Verifies the credentials for a user """
 
         hasher = PasswordHasher()
