@@ -2,3 +2,4 @@ pytest
 pycodestyle
 autopep8
 pylint
+mypy

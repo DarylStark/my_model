@@ -2,8 +2,8 @@ name: Unit tests
 run-name: Execute unit tests
 on: [push]
 jobs:
-  run-unit-tests:
-    name: Execute unit tests
+  unit-test:
+    name: Unit testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -19,3 +19,11 @@ jobs:
         run: pip install -r src/requirements-tests.txt
       - name: Run unit tests
         run: pytest
+  code-quality:
+    name: Checking code quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install app requirements
+        run: pip install -r pylint
+      - name: PyLint
+        run: pylint --errors-only src/
