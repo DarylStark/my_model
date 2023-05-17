@@ -20,7 +20,7 @@ jobs:
       - name: Run unit tests
         run: pytest
   code-quality:
-    name: Checking code quality
+    name: Code quality
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
