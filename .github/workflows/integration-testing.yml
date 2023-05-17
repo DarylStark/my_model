@@ -3,7 +3,7 @@ run-name: Integration testing
 on: [push]
 jobs:
   unit-test:
-    name: Unit test
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
