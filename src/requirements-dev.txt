@@ -8,6 +8,7 @@ pylint
 mypy
 flake8
 pydocstyle
+darglint2
 # ---------------------------------------------------------------------
 # Formatting
 autopep8
