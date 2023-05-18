@@ -37,7 +37,7 @@ dev = [
 Homepage = 'https://github.com/DarylStark/my_model'
 
 [tool.bumpver]
-current_version = "0.1.7-dev"
+current_version = "0.1.8-dev"
 version_pattern = "MAJOR.MINOR.PATCH[-TAG]"
 commit_message = "Version {new_version}"
 commit = true
