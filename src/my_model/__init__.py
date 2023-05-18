@@ -1,5 +1,7 @@
 """My Model Package.
 
+Version 0.0.1-dev.
+
 This package contains the data model for the complete My application. It
 specifies the models that should be used by other packages to create,
 retrieve and update items.
