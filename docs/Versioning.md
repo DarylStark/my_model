@@ -12,23 +12,23 @@ The `TAG` can ben any of the following:
 
 ## Create a new version
 
-After we upload a package to the index, we increase the version. This means we create a new `dev` version and start working on that. If all needed code updates are in there, we upload the package with the newly generated version and increase the version again. If we are ready to create a final release, we remove the tag and upload it to the package index. The steps are:
+The following outlines the steps to update the versionnumber:
 
-1.  Create a new `dev` version.
-    -   If we are going to work on a new `PATCH` version, use the following command:
+1.  Start working on the version. Add the features or bugfixes you want to add.
+2.  Create a new `dev` version.
+    -   If we are woring on a new `PATCH` version, use the following command:
 
         ```bash
         bumpver update --tag dev --patch
         ```
 
-    -   If we are going to work on a new `MINOR` version, use the following command:
+    -   If we are working on a new `MINOR` version, use the following command:
 
         ```bash
         bumpver update --tag dev --minor
         ```
 
-2.  Start working on the version. Add the features or bugfixes you want to add.
-3.  As soon as everything is in there, we can build the library using the following command:
+3.  Build the library using the following command:
 
     ```bash
     python3 -m build
