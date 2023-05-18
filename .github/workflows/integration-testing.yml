@@ -20,7 +20,6 @@ jobs:
       - name: Run unit tests
         run: pytest
   code-quality:
-    needs: unit-tests
     name: Code quality
     runs-on: ubuntu-latest
     steps:
@@ -49,17 +48,12 @@ jobs:
       - name: MyPy (source code)
         run: mypy src/
   build:
-    needs: code-quality
-    name: 
+    needs: [unit-tests, code-quality]
+    name: Build Python package
     runs-on: self-hosted
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Setup Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11.3"
-          cache: "pip"
       - name: Install dev requirements
         run: pip install -r src/requirements-dev.txt
       - name: Create the distributable
