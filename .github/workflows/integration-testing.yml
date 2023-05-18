@@ -55,6 +55,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
       - name: Install dev requirements
-        run: pip install -r src/requirements-dev.txt
+        run: pip3 install -r src/requirements-build.txt
       - name: Create the distributable
         run: python3 -m build
