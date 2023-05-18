@@ -15,4 +15,8 @@ env*
 
 # Exclude 'rope' configuration and cache
 .vscode/.ropeproject
+
+# Exclude build files
+build/
+*.egg-info
 #------------------------------------------------------------------------------
