@@ -1,6 +1,9 @@
-name: Integration testing
-run-name: Integration testing
-on: [push]
+name: Test and deploy
+run-name: Test and deploy
+on:
+  push:
+    branches:
+      main
 jobs:
   unit-tests:
     name: Unit tests
