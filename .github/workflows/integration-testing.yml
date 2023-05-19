@@ -63,4 +63,4 @@ jobs:
         run: python3 -m build
       - name: Distribute the package
         # TODO: Make the target dir a environment variable
-        run: mv dist/*.tar.gz $CB_KR23_REPO_DIR/my-model/
+        run: mv dist/*.tar.gz ${{ env.CB_KR23_REPO_DIR }}/my-model/
