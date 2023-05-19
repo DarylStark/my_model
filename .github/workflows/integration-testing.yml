@@ -53,7 +53,7 @@ jobs:
   build_and_deploy:
     needs: [unit-tests, code-quality]
     name: Build and deploy Python package
-    runs-on: CB-KR23-my-runner
+    runs-on: self-hosted
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
