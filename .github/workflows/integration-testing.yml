@@ -47,9 +47,9 @@ jobs:
         run: pydocstyle src/
       - name: MyPy (source code)
         run: mypy src/
-  build:
+  build_and_deploy:
     needs: [unit-tests, code-quality]
-    name: Build Python package
+    name: Build and deploy Python package
     runs-on: self-hosted
     steps:
       - name: Checkout the repository
@@ -58,3 +58,5 @@ jobs:
         run: pip3 install -r src/requirements-build.txt
       - name: Create the distributable
         run: python3 -m build
+      - name: Distribute the package
+        run: cp dist/* /mnt/ext-ssd01/nfs/pypiserver/repositories/my/my-model/
