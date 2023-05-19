@@ -59,4 +59,4 @@ jobs:
       - name: Create the distributable
         run: python3 -m build
       - name: Distribute the package
-        run: cp dist/* /mnt/ext-ssd01/nfs/pypiserver/repositories/my/my-model/
+        run: mv dist/*.tar.gz /mnt/ext-ssd01/nfs/pypiserver/repositories/my/my-model/
