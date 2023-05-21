@@ -7,4 +7,4 @@ on:
 
 jobs:
   name: Test
-  uses: .github/workflows/integration-testing.yml
+  uses: ./.github/workflows/integration-testing.yml
