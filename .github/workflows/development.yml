@@ -7,7 +7,9 @@ on:
 
 jobs:
   integration:
+    name: Integration testing
     uses: ./.github/workflows/integration.yml
   build-and-deploy:
+    name: Deployment
     uses: ./.github/workflows/deploy.yml
     needs: integration
