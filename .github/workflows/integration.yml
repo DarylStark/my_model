@@ -1,10 +1,7 @@
-name: Test and deploy
-run-name: Test and deploy
+name: Test
+run-name: Test
 on:
-  # push:
-    # branches:
-    #   main
-    workflow_call:
+  workflow_call:
 jobs:
   unit-tests:
     name: Unit tests
@@ -51,17 +48,3 @@ jobs:
         run: pydocstyle src/
       - name: MyPy (source code)
         run: mypy src/
-  build_and_deploy:
-    needs: [unit-tests, code-quality]
-    name: Build and deploy Python package
-    runs-on: self-hosted
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-      - name: Install dev requirements
-        run: pip3 install -r src/requirements-build.txt
-      - name: Create the distributable
-        run: python3 -m build
-      - name: Distribute the package
-        # TODO: Make the target dir a environment variable
-        run: mv dist/*.tar.gz ${{ env.CB_KR23_REPO_DIR }}/my-model/

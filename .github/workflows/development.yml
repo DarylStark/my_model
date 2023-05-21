@@ -6,5 +6,8 @@ on:
     #   main
 
 jobs:
-  integration-testing:
-    uses: ./.github/workflows/integration-testing.yml
+  integration:
+    uses: ./.github/workflows/inegration.yml
+  build-and-deploy:
+    uses: ./.github/workflows/deploy.yml
+    needs: integration

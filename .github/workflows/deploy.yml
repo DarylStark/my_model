@@ -1,0 +1,17 @@
+name: Deploy
+run-name: Deploy
+on:
+  workflow_call:
+jobs:
+  build-and-deploy:
+    name: Build and deploy Python package
+    runs-on: self-hosted
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Install dev requirements
+        run: pip3 install -r src/requirements-build.txt
+      - name: Create the distributable
+        run: python3 -m build
+      - name: Distribute the package
+        run: mv dist/*.tar.gz ${{ vars.CB_KR23_REPO_DIR }}/my-model/
