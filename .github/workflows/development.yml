@@ -7,7 +7,7 @@ on:
 
 jobs:
   integration:
-    uses: ./.github/workflows/inegration.yml
+    uses: ./.github/workflows/integration.yml
   build-and-deploy:
     uses: ./.github/workflows/deploy.yml
     needs: integration
