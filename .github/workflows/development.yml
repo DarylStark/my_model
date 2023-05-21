@@ -6,5 +6,5 @@ on:
     #   main
 
 jobs:
-  name: Test
-  uses: ./.github/workflows/integration-testing.yml
+  integration-testing:
+    uses: ./.github/workflows/integration-testing.yml
