@@ -2,6 +2,9 @@ name: Deploy
 run-name: Deploy
 on:
   workflow_call:
+    secrets:
+      repository_directory:
+        required: true
 jobs:
   build-and-deploy:
     name: Build and deploy Python package
@@ -15,6 +18,4 @@ jobs:
         run: python3 -m build
       - name: Distribute the package
         shell: bash
-        env:
-          REPO_DIR: ${{ secrets.CB_KR23_REPO_DIR }}
-        run: mv dist/*.tar.gz $REPO_DIR/my-model/
+        run: mv dist/*.tar.gz ${{ secrets.repository_directory }}/my-model/

@@ -13,3 +13,5 @@ jobs:
     name: Deployment
     uses: ./.github/workflows/deploy.yml
     needs: integration
+    secrets:
+      repository_directory: ${{ secrets.CB_KR23_REPO_DIR }}
