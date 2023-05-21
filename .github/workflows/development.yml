@@ -1,0 +1,10 @@
+name: Test and deploy (dev)
+run-name: Test and deploy (dev)
+on:
+  push:
+    # branches:
+    #   main
+
+jobs:
+  name: Test
+  uses: .github/workflows/integration-testing.yml

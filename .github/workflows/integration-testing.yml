@@ -1,9 +1,10 @@
 name: Test and deploy
 run-name: Test and deploy
 on:
-  push:
+  # push:
     # branches:
     #   main
+    workflow_call:
 jobs:
   unit-tests:
     name: Unit tests
