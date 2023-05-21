@@ -14,6 +14,7 @@ jobs:
       - name: Create the distributable
         run: python3 -m build
       - name: Distribute the package
+        shell: bash
         env:
           REPO_DIR: ${{ secrets.CB_KR23_REPO_DIR }}
         run: mv dist/*.tar.gz $REPO_DIR/my-model/
