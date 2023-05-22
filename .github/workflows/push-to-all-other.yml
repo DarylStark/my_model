@@ -3,7 +3,7 @@ run-name: Test
 on:
   push:
     branches-ignore:
-    - dev
+    - dev*
     - main
 
 jobs:

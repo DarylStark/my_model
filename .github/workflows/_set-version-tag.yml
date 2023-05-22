@@ -1,0 +1,29 @@
+name: Set version tag
+run-name: Set version tag
+on:
+  workflow_call:
+    inputs:
+      tag-name:
+        type: string
+        required: true
+        default: final
+jobs:
+  build-and-deploy:
+    name: Set version tag
+    runs-on: ubuntu-latest
+    env:
+      AUTHOR: ${{ github.event.pusher.name }}
+      EMAIL: ${{ github.event.pusher.email }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Install `bumpver`
+        run: pip3 install bumpver
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ env.AUTHOR }}"
+          git config --global user.email "${{ env.EMAIL }}"
+      - name: Set the version
+        run: python3 -m bumpver update --tag ${{ inputs.tag-name }} --no-fetch --tag-commit
+      - name: Push the code
+        run: git push

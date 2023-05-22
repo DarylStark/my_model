@@ -1,9 +1,9 @@
-name: Test and deploy (dev)
-run-name: Test and deploy (dev)
+name: Test and deploy (main)
+run-name: Test and deploy (main)
 on:
   push:
-    branches:
-      dev*
+    # branches:
+    #   dev
 
 jobs:
   check-version:
@@ -17,6 +17,12 @@ jobs:
     needs: check-version
     with:
       code-quality-may-fail: true
+  set-version-tag:
+    name: Set version tag
+    uses: ./.github/workflows/_set-version-tag.yml
+    needs: integration
+    with:
+      tag-name: final
   build-and-deploy:
     name: Deployment
     uses: ./.github/workflows/_deploy.yml
