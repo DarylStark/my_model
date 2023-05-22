@@ -16,13 +16,15 @@ jobs:
     uses: ./.github/workflows/_integration.yml
     needs: check-version
     with:
-      code-quality-may-fail: true
+      code-quality-may-fail: false
   set-version-tag:
     name: Set version tag
     uses: ./.github/workflows/_set-version-tag.yml
     needs: integration
     with:
       tag-name: final
+    secrets:
+      github-token: ${{ github.token }}
   build-and-deploy:
     name: Deployment
     uses: ./.github/workflows/_deploy.yml
