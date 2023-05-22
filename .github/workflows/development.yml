@@ -8,10 +8,10 @@ on:
 jobs:
   integration:
     name: Integration testing
-    uses: ./.github/workflows/subflows/integration.yml
+    uses: ./.github/workflows/_integration.yml
   build-and-deploy:
     name: Deployment
-    uses: ./.github/workflows/subflows/deploy.yml
+    uses: ./.github/workflows/_deploy.yml
     needs: integration
     secrets:
       repository_directory: ${{ secrets.CB_KR23_REPO_DIR }}
