@@ -12,6 +12,7 @@ jobs:
   integration:
     name: Integration testing
     uses: ./.github/workflows/_integration.yml
+    needs: check-version
   build-and-deploy:
     name: Deployment
     uses: ./.github/workflows/_deploy.yml

@@ -5,7 +5,7 @@ on:
 jobs:
   build-and-deploy:
     name: Check version tag
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -13,4 +13,4 @@ jobs:
         run: pip3 install bumpver
       - name: Get the version
         shell: bash
-        run: bumpver show --no-fetch --env; echo $TAG | grep dev
+        run: eval $(python3 -m bumpver show --no-fetch --env); echo $TAG | grep dev
