@@ -2,8 +2,8 @@ name: Test and deploy (dev)
 run-name: Test and deploy (dev)
 on:
   push:
-    # branches:
-    #   main
+    branches:
+      dev
 
 jobs:
   check-version:
