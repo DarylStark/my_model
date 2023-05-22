@@ -26,6 +26,6 @@ jobs:
   build-and-deploy:
     name: Deployment
     uses: ./.github/workflows/_deploy.yml
-    needs: integration
+    needs: set-version-tag
     secrets:
       repository_directory: ${{ secrets.CB_KR23_REPO_DIR }}
