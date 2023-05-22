@@ -12,6 +12,8 @@ def example_tag() -> Tag:
 def test_tag_color_regex(example_tag: Tag) -> None:
     """ Unit test to test the regex for the color """
 
+    assert False
+
     # Invalid colors
     with raises(ValueError):
         example_tag.color = 'red'
