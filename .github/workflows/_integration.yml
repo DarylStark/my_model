@@ -2,6 +2,11 @@ name: Test
 run-name: Test
 on:
   workflow_call:
+    inputs:
+      code-quality-may-fail:
+        type: boolean
+        default: false
+        description: Determines if the workflow should continue when the Code Quality check fails
 jobs:
   unit-tests:
     name: Unit tests
@@ -20,10 +25,10 @@ jobs:
         run: pip install -r src/requirements-dev.txt
       - name: Run unit tests
         run: pytest
-        continue-on-error: true
   code-quality:
     name: Code quality
     runs-on: ubuntu-latest
+    continue-on-error: ${{ inputs.code-quality-may-fail }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
