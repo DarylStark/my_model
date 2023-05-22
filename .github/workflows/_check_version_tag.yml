@@ -1,0 +1,16 @@
+name: Check version tag
+run-name: Check version tag
+on:
+  workflow_call:
+jobs:
+  build-and-deploy:
+    name: Check version tag
+    runs-on: self-hosted
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Install `bumpver`
+        run: pip3 install bumpver
+      - name: Get the version
+        shell: bash
+        run: bumpver show --no-fetch --env; echo $TAG | grep dev

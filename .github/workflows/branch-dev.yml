@@ -6,6 +6,9 @@ on:
     #   main
 
 jobs:
+  check-version:
+    name: Check version tag
+    uses: ./.github/workflows/_check_version_tag.yml
   integration:
     name: Integration testing
     uses: ./.github/workflows/_integration.yml
