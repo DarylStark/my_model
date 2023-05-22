@@ -1,7 +1,7 @@
 """Module that contains the class for a API clients."""
 
-from ._model import Model
 from pydantic import Field
+from ._model import Model
 
 
 class APIScope(Model):
