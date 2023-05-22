@@ -13,4 +13,4 @@ jobs:
         run: pip3 install bumpver
       - name: Get the version
         shell: bash
-        run: eval $(python3 -m bumpver show --no-fetch --env); echo $TAG | grep dev
+        run: eval $(python3 -m bumpver show --no-fetch --env); echo $TAG | grep final
