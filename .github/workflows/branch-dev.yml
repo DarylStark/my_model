@@ -9,6 +9,8 @@ jobs:
   check-version:
     name: Check version tag
     uses: ./.github/workflows/_check_version_tag.yml
+    with:
+      tag-name: dev
   integration:
     name: Integration testing
     uses: ./.github/workflows/_integration.yml
