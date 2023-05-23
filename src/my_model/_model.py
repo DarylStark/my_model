@@ -12,9 +12,14 @@ class Model(BaseModel):
     Should be used for all models. This base class defines the Pydantic
     configuration that all models should use.
 
+    Class attributes:
+        id: the unique ID for this object
+
     Composed classes:
         Config: defines the Config for the Pydantic model
     """
+
+    id: int | None = None
 
     class Config:
         """Config for the models.
