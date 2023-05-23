@@ -7,7 +7,7 @@ from ._model import Model
 class APIScope(Model):
     """Model for API scopes.
 
-    Class attributes:
+    Attributes:
         module: the module for the API scope
         subject: the subject for the API scope
     """

@@ -14,7 +14,7 @@ from ._model import Model
 class UserRole(int, Enum):
     """The roles a user can have.
 
-    Values:
+    Attributes:
         ROOT: for root users; users with god-mode permissions.
         ADMIN: for admin users; users with the permissions to create other
             'normal' users.
@@ -31,7 +31,7 @@ class User(Model):
 
     The user model is meant for local useraccounts.
 
-    Class attributes:
+    Attributes:
         created: the datetime when this user was created
         fullname: the fullname for the user
         username: the username for the user

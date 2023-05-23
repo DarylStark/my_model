@@ -12,11 +12,8 @@ class Model(BaseModel):
     Should be used for all models. This base class defines the Pydantic
     configuration that all models should use.
 
-    Class attributes:
+    Attributes:
         id: the unique ID for this object
-
-    Composed classes:
-        Config: defines the Config for the Pydantic model
     """
 
     id: int | None = None
@@ -24,7 +21,7 @@ class Model(BaseModel):
     class Config:
         """Config for the models.
 
-        Class attributes:
+        Attributes:
             validate_assignment: specifies if assigned values should be
                 validated by Pydantic. If this is set to True, only assignments
                 in the constructor are validated.
