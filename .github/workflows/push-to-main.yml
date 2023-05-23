@@ -10,24 +10,16 @@ jobs:
     name: Check version tag
     uses: ./.github/workflows/_check-version-tag.yml
     with:
-      tag-name: dev
+      tag-name: final
   integration:
     name: Integration testing
     uses: ./.github/workflows/_integration.yml
     needs: check-version
     with:
       code-quality-may-fail: false
-  set-version-tag:
-    name: Set version tag
-    uses: ./.github/workflows/_set-version-tag.yml
-    needs: integration
-    with:
-      tag-name: final
-    secrets:
-      github-token: ${{ github.token }}
   build-and-deploy:
     name: Deployment
     uses: ./.github/workflows/_deploy.yml
-    needs: set-version-tag
+    needs: integration
     secrets:
       repository_directory: ${{ secrets.CB_KR23_REPO_DIR }}
