@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Go to latests commit
+        run: git checkout HEAD^
       - name: Install build requirements
         run: pip3 install -r src/requirements-build.txt
       - name: Create the distributable
