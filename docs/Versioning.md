@@ -1,63 +1,9 @@
-# New version
+# Versioning
 
-This document describes the versioning scheme for this library and describe the steps that are needed when a new version should be released.
+For this library is chosen to use incremental version numbering with the version pattern `MAJOR.MINOR.PATCH[-TAG]`. The `MAJOR` starts at `1` and is only increased when there is a new version that causes major breaking of code that is dependent on this library. This version will almost never, if ever, increase. The `MINOR` is increased when new features are added to the library. If this version will break anything, it will be in the release notes. The `PATCH` is increased when there are bugfixes in the code. This should never break any dependent code.
 
-## Versioning
+The `-TAG` defines what kind of library this is. For this library, the tag can be either nothing, meaning it is a final release, or `dev`, meaning the release is still in development. If the tag is `dev`, there is a likely chance that this version will change overtime. You cannot use this kind of version for production workloads.
 
-This library uses a versioning scheme with the format `MAJOR.MINOR.PATCH[-TAG]`. The `MAJOR` version will be `1`. It will be increased on complete new versions. For instance on a rewrite of the application or when introducing new features that will break the usage of this library. The `MINOR` will be increased every time at least one new feature is added. The `PATCH` will be increased on version with bugfixes only.
+## Release notes
 
-The `TAG` can ben any of the following:
--   `dev`; used for the library when it is still in development. This is not a tested release!
--   nothing; for tested releases.
-
-## Create a new version
-
-The following outlines the steps to update the versionnumber:
-
-1.  Start working on the version. Add the features or bugfixes you want to add.
-2.  Create a new `dev` version.
-    -   If we are woring on a new `PATCH` version, use the following command:
-
-        ```bash
-        bumpver update --tag dev --patch
-        ```
-
-    -   If we are working on a new `MINOR` version, use the following command:
-
-        ```bash
-        bumpver update --tag dev --minor
-        ```
-
-3.  Build the library using the following command:
-
-    ```bash
-    python3 -m build
-    ```
-
-    The package will be build and placed in the `dist/` folder.
-4.  Tag the current commit with the version number (including the tag) and push it to GitHub
-
-    ```bash
-    git push origin --tags
-    ```
-
-5.  Copy the created package to the package index so other libraries and application can use it.
-6.  When the `dev` version is tested completly and we are ready to make it a production version, remove the `-dev` tag with the following command:
-
-    ```bash
-    bumpver update --tag final
-    ```
-
-7.  After that, build the package:
-
-    ```bash
-    python3 -m build
-    ```
-
-    The package will be build and placed in the `dist/` folder.
-8.  Tag the current commit with the version number and push it to GitHub
-
-    ```bash
-    git push origin --tags
-    ```
-9.  Copy the created package to the package index so other libraries and application can use it.
+The releasenotes for this library will be placed at two places; in the repository in a file called `CHANGELOG.md` and on GitHub at the releases page. Both should be the same at all time and should contain all changes for all versions, including the date of the release. Both locations will only contain the changes in final released, not in dev releases.
