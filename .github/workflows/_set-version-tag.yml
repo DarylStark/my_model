@@ -31,6 +31,6 @@ jobs:
       - name: Push the code
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
       # TODO: Create a release
