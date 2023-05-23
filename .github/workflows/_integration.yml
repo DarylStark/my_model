@@ -1,8 +1,14 @@
-name: Integration testing
-run-name: Integration testing
-on: [push]
+name: Test
+run-name: Test
+on:
+  workflow_call:
+    inputs:
+      code-quality-may-fail:
+        type: boolean
+        default: false
+        description: Determines if the workflow should continue when the Code Quality check fails
 jobs:
-  unit-test:
+  unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +28,7 @@ jobs:
   code-quality:
     name: Code quality
     runs-on: ubuntu-latest
+    continue-on-error: ${{ inputs.code-quality-may-fail }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
