@@ -12,7 +12,7 @@ class UserSession(Model):
     The usersession model is meant for user session that give a authenticated
     user session.
 
-    Class attributes:
+    Attributes:
         created: the datetime when this usersession was created
         secret: a random generated secret for this usersession
         title: the title for this usersession
