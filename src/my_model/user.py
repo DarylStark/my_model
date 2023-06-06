@@ -22,8 +22,7 @@ class UserRole(int, Enum):
     """
 
     ROOT = 1
-    ADMIN = 2
-    USER = 3
+    USER = 2
 
 
 class User(Model):
