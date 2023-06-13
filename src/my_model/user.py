@@ -48,7 +48,7 @@ class User(Model):
     email: str = Field(
         regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
     role: UserRole = Field(default=UserRole.USER)
-    password_hash: str
+    password_hash: str | None = None
     password_date: datetime = Field(default_factory=datetime.utcnow)
     second_factor: None | str = Field(
         default=None,
