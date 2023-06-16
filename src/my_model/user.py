@@ -99,8 +99,11 @@ class User(Model):
         """
         hasher = PasswordHasher()
         try:
-            credentials = (username == self.username and
-                           hasher.verify(self.password_hash, password))
+            if self.password_hash:
+                credentials = (username == self.username and
+                               hasher.verify(self.password_hash, password))
+            else:
+                raise VerifyMismatchError
         except VerifyMismatchError:
             return False
 
