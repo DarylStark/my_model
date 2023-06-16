@@ -2,10 +2,9 @@
 
 import random
 import string
+from typing import Any
 
 from pydantic import BaseModel, validate_arguments
-
-from typing import Any
 
 
 class Model(BaseModel):
@@ -24,9 +23,29 @@ class Model(BaseModel):
     _hidden_fields: dict[str, Any] = {}
 
     def set_hidden(self, name: str, value: Any) -> None:
+        """Set a hidden value.
+
+        Sets a hidden value in the object. These values can be used for
+        connection to a database, for example.
+
+        Args:
+            name: the name of the hidden data.
+            value: the value.
+        """
         self._hidden_fields[name] = value
 
     def get_hidden(self, name: str, default: Any = None) -> Any:
+        """Get a hidden value.
+
+        Returns a hidden value.
+
+        Args:
+            name: the name of the hidden data.
+            default: the default value in case the hidden data is not found.
+
+        Returns:
+            Any: the value of the hidden data.
+        """
         return self._hidden_fields.get(name, default)
 
     class Config:
@@ -34,8 +53,8 @@ class Model(BaseModel):
 
         Attributes:
             validate_assignment: specifies if assigned values should be
-                validated by Pydantic. If this is set to False, only assignments
-                in the constructor are validated.
+                validated by Pydantic. If this is set to False, only
+                assignments in the constructor are validated.
         """
 
         validate_assignment = True
