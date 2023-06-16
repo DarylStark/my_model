@@ -23,7 +23,7 @@ class Model(BaseModel):
 
         Attributes:
             validate_assignment: specifies if assigned values should be
-                validated by Pydantic. If this is set to True, only assignments
+                validated by Pydantic. If this is set to False, only assignments
                 in the constructor are validated.
         """
 
