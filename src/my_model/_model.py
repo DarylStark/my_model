@@ -5,6 +5,8 @@ import string
 
 from pydantic import BaseModel, validate_arguments
 
+from typing import Any
+
 
 class Model(BaseModel):
     """Pydantic basemodel for all models.
@@ -17,6 +19,15 @@ class Model(BaseModel):
     """
 
     id: int | None = None
+
+    # Hidden fields
+    _hidden_fields: dict[str, Any] = {}
+
+    def set_hidden(self, name: str, value: Any) -> None:
+        self._hidden_fields[name] = value
+
+    def get_hidden(self, name: str, default: Any = None) -> Any:
+        return self._hidden_fields.get(name, default)
 
     class Config:
         """Config for the models.
