@@ -1,10 +1,10 @@
 """Module that contains the class for a API clients."""
 
 from sqlmodel import Field
-from .model import Model
+from .user_scoped_model import UserScopedModel
 
 
-class WebUISetting(Model):
+class WebUISetting(UserScopedModel):
     """Model for Web UI Settings.
 
     The Web UI Settings model should be used by Web UIs that use this model to

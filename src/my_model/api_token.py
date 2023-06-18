@@ -5,9 +5,10 @@ from datetime import datetime
 from sqlmodel import Field
 
 from ._token_object import TokenObject
+from .user_scoped_model import UserScopedModel
 
 
-class APIToken(TokenObject):
+class APIToken(UserScopedModel, TokenObject):
     """Model for API clients.
 
     Attributes:

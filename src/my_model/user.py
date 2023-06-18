@@ -7,7 +7,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from pydantic import validate_arguments
 from pyotp import TOTP, random_base32
-from sqlmodel import Field
+from sqlmodel import Field, Relationship
 
 from .model import Model
 
@@ -54,6 +54,9 @@ class User(Model):
     second_factor: None | str = Field(
         default=None,
         regex=r'^[A-Z0-9]+$', max_length=64)
+
+    # Relationships
+    tags: list['Tag'] = Relationship(back_populates='user')
 
     @validate_arguments
     def set_password(self, password: str) -> None:

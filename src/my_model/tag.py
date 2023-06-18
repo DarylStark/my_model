@@ -1,10 +1,12 @@
 """Module that contains the class for a API clients."""
 
-from sqlmodel import Field
-from .model import Model
+from sqlmodel import Field, Relationship
+
+from .user import User
+from .user_scoped_model import UserScopedModel
 
 
-class Tag(Model):
+class Tag(UserScopedModel):
     """Model for Tags.
 
     The tag model is meant to represent a tag. A tag can be given to a
@@ -21,3 +23,4 @@ class Tag(Model):
     title: str = Field(max_length=128)
     color: str | None = Field(
         default=None, regex=r'^[a-fA-F0-9]{6}$', min_length=6, max_length=6)
+    user: User = Relationship(back_populates='tags')

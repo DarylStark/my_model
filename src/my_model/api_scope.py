@@ -1,10 +1,11 @@
 """Module that contains the class for a API clients."""
 
 from sqlmodel import Field
-from .model import Model
+
+from .user_scoped_model import UserScopedModel
 
 
-class APIScope(Model):
+class APIScope(UserScopedModel):
     """Model for API scopes.
 
     Attributes:

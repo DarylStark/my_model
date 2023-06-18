@@ -5,10 +5,10 @@ from datetime import datetime
 from pydantic import validate_arguments
 from sqlmodel import Field
 
-from .model import Model
+from .user_scoped_model import UserScopedModel
 
 
-class UserSession(Model):
+class UserSession(UserScopedModel):
     """Model for User Sessions.
 
     The usersession model is meant for user session that give a authenticated
