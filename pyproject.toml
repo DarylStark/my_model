@@ -4,7 +4,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "my_model"
-version = "1.0.1-dev"
+version = "1.0.1"
 description = "The data model for the My project"
 readme = "README.md"
 authors = [{ name = "Daryl Stark", email = "daryl@dstark.nl" }]
@@ -37,7 +37,7 @@ dev = [
 Homepage = 'https://github.com/DarylStark/my_model'
 
 [tool.bumpver]
-current_version = "1.0.1-dev"
+current_version = "1.0.1"
 version_pattern = "MAJOR.MINOR.PATCH[-TAG]"
 commit_message = "Version {new_version}"
 commit = true
