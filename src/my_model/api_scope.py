@@ -1,6 +1,6 @@
 """Module that contains the class for a API clients."""
 
-from pydantic import Field
+from sqlmodel import Field
 from ._model import Model
 
 

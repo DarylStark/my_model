@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from pydantic import Field
+from sqlmodel import Field
 
 from ._token_object import TokenObject
 

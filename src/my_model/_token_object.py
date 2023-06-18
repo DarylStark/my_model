@@ -1,6 +1,7 @@
 """Module that contains the base class for models that have a token."""
 
-from pydantic import Field, validate_arguments
+from pydantic import validate_arguments
+from sqlmodel import Field
 
 from ._model import Model
 

@@ -4,49 +4,26 @@ import random
 import string
 from typing import Any
 
-from pydantic import BaseModel, validate_arguments
+from pydantic import validate_arguments
+from sqlmodel import Field, SQLModel
 
 
-class Model(BaseModel):
-    """Pydantic basemodel for all models.
+class Model(SQLModel):
+    """SQLmodel basemodel for all models.
 
     Should be used for all models. This base class defines the Pydantic
-    configuration that all models should use.
+    configuration that all models should use. Because we use SQLmodel, these
+    models are usable for generic modeling _and_ for SQLalchemy ORM.
 
     Attributes:
-        id: the unique ID for this object
+        id: the unique ID for this object. If this object is used for a SQL
+            database, it is the primary key.
     """
 
-    id: int | None = None
+    id: int | None = Field(default=None, primary_key=True)
 
     # Hidden fields
     _hidden_fields: dict[str, Any] = {}
-
-    def set_hidden(self, name: str, value: Any) -> None:
-        """Set a hidden value.
-
-        Sets a hidden value in the object. These values can be used for
-        connection to a database, for example.
-
-        Args:
-            name: the name of the hidden data.
-            value: the value.
-        """
-        self._hidden_fields[name] = value
-
-    def get_hidden(self, name: str, default: Any = None) -> Any:
-        """Get a hidden value.
-
-        Returns a hidden value.
-
-        Args:
-            name: the name of the hidden data.
-            default: the default value in case the hidden data is not found.
-
-        Returns:
-            Any: the value of the hidden data.
-        """
-        return self._hidden_fields.get(name, default)
 
     class Config:
         """Config for the models.

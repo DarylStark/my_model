@@ -5,8 +5,9 @@ from enum import Enum
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from pydantic import Field, validate_arguments
+from pydantic import validate_arguments
 from pyotp import TOTP, random_base32
+from sqlmodel import Field
 
 from ._model import Model
 
