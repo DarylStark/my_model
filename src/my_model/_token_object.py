@@ -3,7 +3,7 @@
 from pydantic import validate_arguments
 from sqlmodel import Field
 
-from ._model import Model
+from .model import Model
 
 
 class TokenObject(Model):

@@ -9,7 +9,7 @@ from pydantic import validate_arguments
 from pyotp import TOTP, random_base32
 from sqlmodel import Field
 
-from ._model import Model
+from .model import Model
 
 
 class UserRole(int, Enum):
