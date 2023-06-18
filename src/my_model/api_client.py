@@ -10,7 +10,7 @@ from ._token_object import TokenObject
 class APIClient(TokenObject):
     """Model for API clients.
 
-    Class attributes:
+    Attributes:
         created: the datetime when this client was created
         expires: the datetime when this client will expire
         enabled: defines it the client is enabled

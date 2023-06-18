@@ -11,7 +11,7 @@ class Tag(Model):
     multitude of resources in the application, like days, notes, RSS feeds,
     etc. They are meant to group everything together that needs to be together.
 
-    Class attributes:
+    Attributes:
         title: the name of the tag
         color: a specific color for the tag. This color can be used by
             view-services to display the tag in a distinguishable way. The

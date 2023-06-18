@@ -11,7 +11,7 @@ class TokenObject(Model):
     Defines the `set_random_token` method that can and should be used to
     generate a random token.
 
-    Class attributes:
+    Attributes:
         token: the token for the object
     """
 

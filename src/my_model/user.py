@@ -14,7 +14,7 @@ from ._model import Model
 class UserRole(int, Enum):
     """The roles a user can have.
 
-    Values:
+    Attributes:
         ROOT: for root users; users with god-mode permissions.
         ADMIN: for admin users; users with the permissions to create other
             'normal' users.
@@ -22,8 +22,7 @@ class UserRole(int, Enum):
     """
 
     ROOT = 1
-    ADMIN = 2
-    USER = 3
+    USER = 2
 
 
 class User(Model):
@@ -31,7 +30,7 @@ class User(Model):
 
     The user model is meant for local useraccounts.
 
-    Class attributes:
+    Attributes:
         created: the datetime when this user was created
         fullname: the fullname for the user
         username: the username for the user
@@ -49,7 +48,7 @@ class User(Model):
     email: str = Field(
         regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
     role: UserRole = Field(default=UserRole.USER)
-    password_hash: str
+    password_hash: str | None = None
     password_date: datetime = Field(default_factory=datetime.utcnow)
     second_factor: None | str = Field(
         default=None,
@@ -100,8 +99,11 @@ class User(Model):
         """
         hasher = PasswordHasher()
         try:
-            credentials = (username == self.username and
-                           hasher.verify(self.password_hash, password))
+            if self.password_hash:
+                credentials = (username == self.username and
+                               hasher.verify(self.password_hash, password))
+            else:
+                raise VerifyMismatchError
         except VerifyMismatchError:
             return False
 

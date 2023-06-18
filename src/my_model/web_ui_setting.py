@@ -10,7 +10,7 @@ class WebUISetting(Model):
     The Web UI Settings model should be used by Web UIs that use this model to
     set specific settings, like themes and notification settings.
 
-    Class attributes:
+    Attributes:
         setting: the name of the setting
         value: the value for the setting
     """
