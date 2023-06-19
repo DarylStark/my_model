@@ -16,4 +16,4 @@ class UserScopedModel(Model):
         user_id: the unique ID for a user
     """
 
-    user_id: int | None = Field(foreign_key='dbuser.id')
+    user_id: int | None = Field(foreign_key='user.id')
