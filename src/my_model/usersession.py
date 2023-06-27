@@ -3,12 +3,12 @@
 from datetime import datetime
 
 from pydantic import validate_arguments
-from sqlmodel import Field
+from sqlmodel import Field, Relationship
 
 from .user_scoped_model import UserScopedModel
 
 
-class UserSession(UserScopedModel):
+class UserSession(UserScopedModel, table=True):
     """Model for User Sessions.
 
     The usersession model is meant for user session that give a authenticated
@@ -20,12 +20,16 @@ class UserSession(UserScopedModel):
         title: the title for this usersession
         host: the host where this usersession was originated. Can be a IPv4
             address, IPv6 address or even a hostname.
+        user: the user object for the owner.
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
     secret: str | None = Field(default=None, max_length=64)
     title: str | None = Field(default=None, max_length=128)
     host: str | None = Field(default=None, max_length=128)
+
+    # Relationships
+    user: 'User' = Relationship(back_populates='usersessions')
 
     @validate_arguments
     def set_random_secret(

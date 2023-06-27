@@ -1,4 +1,4 @@
-from pytest import fixture, raises
+from pytest import fixture
 from my_model.usersession import UserSession
 
 

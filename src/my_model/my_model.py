@@ -2,13 +2,12 @@
 
 import random
 import string
-from typing import Any
 
 from pydantic import validate_arguments
 from sqlmodel import Field, SQLModel
 
 
-class Model(SQLModel, table=True):
+class MyModel(SQLModel):
     """SQLmodel basemodel for all models.
 
     Should be used for all models. This base class defines the Pydantic
@@ -20,7 +19,7 @@ class Model(SQLModel, table=True):
             database, it is the primary key.
     """
 
-    id: int = Field(primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
 
     class Config:
         """Config for the models.

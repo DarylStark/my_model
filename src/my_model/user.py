@@ -9,7 +9,12 @@ from pydantic import validate_arguments
 from pyotp import TOTP, random_base32
 from sqlmodel import Field, Relationship
 
-from .model import Model
+from .api_client import APIClient
+from .api_token import APIToken
+from .my_model import MyModel
+from .tag import Tag
+from .usersession import UserSession
+from .web_ui_setting import WebUISetting
 
 
 class UserRole(int, Enum):
@@ -17,8 +22,6 @@ class UserRole(int, Enum):
 
     Attributes:
         ROOT: for root users; users with god-mode permissions.
-        ADMIN: for admin users; users with the permissions to create other
-            'normal' users.
         USER: normal users
     """
 
@@ -26,7 +29,7 @@ class UserRole(int, Enum):
     USER = 2
 
 
-class User(Model):
+class User(MyModel, table=True):
     """Model for Users.
 
     The user model is meant for local useraccounts.
@@ -41,6 +44,11 @@ class User(Model):
         password_date: the date when the password was set
         second_factor: either a random base32 that indicates a secret for the
             second factor of the user, or None if no secret is set.
+        api_clients: a list of API clients for this user.
+        api_tokens: a list of API tokens for this user.
+        tags: a list of tags for this user.
+        usersessions: a list of UserSessions for this user.
+        webuisettings: a list of Web UI settings for this user.
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
@@ -56,7 +64,11 @@ class User(Model):
         regex=r'^[A-Z0-9]+$', max_length=64)
 
     # Relationships
-    tags: list['Tag'] = Relationship(back_populates='user')
+    api_clients: list[APIClient] = Relationship(back_populates='user')
+    api_tokens: list[APIToken] = Relationship(back_populates='user')
+    tags: list[Tag] = Relationship(back_populates='user')
+    usersessions: list[UserSession] = Relationship(back_populates='user')
+    webuisettings: list[WebUISetting] = Relationship(back_populates='user')
 
     @validate_arguments
     def set_password(self, password: str) -> None:

@@ -3,10 +3,10 @@
 from pydantic import validate_arguments
 from sqlmodel import Field
 
-from .model import Model
+from .user_scoped_model import UserScopedModel
 
 
-class TokenObject(Model):
+class TokenModel(UserScopedModel):
     """Basemodel for classes that use tokens.
 
     Defines the `set_random_token` method that can and should be used to

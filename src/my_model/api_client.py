@@ -2,23 +2,23 @@
 
 from datetime import datetime
 
-from sqlmodel import Field
+from sqlmodel import Field, Relationship
 
-from ._token_object import TokenObject
-from .user_scoped_model import UserScopedModel
+from .token_model import TokenModel
 
 
-class APIClient(UserScopedModel, TokenObject):
+class APIClient(TokenModel, table=True):
     """Model for API clients.
 
     Attributes:
-        created: the datetime when this client was created
-        expires: the datetime when this client will expire
-        enabled: defines it the client is enabled
-        app_name: the name for the app
-        app_publisher: the name for the publisher of the app
+        created: the datetime when this client was created.
+        expires: the datetime when this client will expire.
+        enabled: defines it the client is enabled.
+        app_name: the name for the app.
+        app_publisher: the name for the publisher of the app.
         redirect_url: a URL where the user will be redirected after a token has
             been granted. Can and should be used by web applications.
+        user: the user object for the owner.
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
@@ -30,3 +30,6 @@ class APIClient(UserScopedModel, TokenObject):
         default=None,
         regex='^https?://',
         max_length=1024)
+
+    # Relationships
+    user: 'User' = Relationship(back_populates='api_clients')
