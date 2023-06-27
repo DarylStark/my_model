@@ -1,4 +1,7 @@
-"""Module that contains the class for a API clients."""
+"""Module that contains the classes for global models.
+
+These models are _not_ user scoped and are used by the application itself.
+"""
 
 from sqlmodel import Field
 

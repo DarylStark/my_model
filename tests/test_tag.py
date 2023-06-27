@@ -1,6 +1,6 @@
 from pytest import fixture, raises
 
-from my_model.tag import Tag
+from my_model.user_scoped_models import Tag
 
 
 @fixture

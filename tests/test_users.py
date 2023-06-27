@@ -3,7 +3,7 @@ from datetime import datetime
 from pyotp import TOTP
 from pytest import fixture, raises
 
-from my_model.user import User
+from my_model.user_scoped_models import User
 
 
 @fixture

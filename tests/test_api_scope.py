@@ -1,10 +1,6 @@
-from ast import mod
-from datetime import datetime
-
-from pyotp import TOTP
 from pytest import fixture, raises
 
-from my_model.api_scope import APIScope
+from my_model.global_models import APIScope
 
 
 @fixture
