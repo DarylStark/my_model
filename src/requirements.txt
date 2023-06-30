@@ -1,6 +1,7 @@
 # ---------------------------------------------------------------------
 # Modeling
 sqlmodel
+pydantic
 # ---------------------------------------------------------------------
 # Passwords and other user verification libraries
 passlib
