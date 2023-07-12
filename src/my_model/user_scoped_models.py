@@ -55,7 +55,7 @@ class User(MyModel, table=True):
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
-    fullname: str = Field(regex=r'^[A-Za-z\- ]+$', max_length=128)
+    fullname: str = Field(regex=r'^[A-Za-z0-9\- ]+$', max_length=128)
     username: str = Field(regex=r'^[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
     email: str = Field(
         regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
@@ -144,7 +144,7 @@ class UserScopedModel(MyModel):
         user_id: the unique ID for a user.
     """
 
-    user_id: int | None = Field(foreign_key='user.id')
+    user_id: int | None = Field(default=None, foreign_key='user.id')
 
 
 class TokenModel(UserScopedModel):
