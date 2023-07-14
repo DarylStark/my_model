@@ -3,7 +3,7 @@ from datetime import datetime
 from pyotp import TOTP
 from pytest import fixture, raises
 
-from my_model.user import User
+from my_model.user_scoped_models import User
 
 
 @fixture
@@ -25,7 +25,7 @@ def test_user_fullname_regex(example_user_no_second_factor: User):
 
     # List with wrong full names
     wrong_full_names = [
-        '', 'Daryl1', 'Daryl_Stark', 'Emilia_Clarke'
+        '', 'Daryl_Stark', 'Emilia_Clarke'
     ]
 
     # Loop through them and make sure they fail
@@ -37,6 +37,7 @@ def test_user_fullname_regex(example_user_no_second_factor: User):
     example_user_no_second_factor.fullname = 'Daryl Stark'
     example_user_no_second_factor.fullname = 'Emilia Clarke'
     example_user_no_second_factor.fullname = 'Emilia-Clarke'
+    example_user_no_second_factor.fullname = 'Daryl Stark 1'
 
 
 def test_user_username_regex(example_user_no_second_factor: User):

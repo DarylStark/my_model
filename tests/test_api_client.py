@@ -1,10 +1,6 @@
-from datetime import datetime
-from multiprocessing import Value
-
-from pyotp import TOTP
 from pytest import fixture, raises
 
-from my_model.api_client import APIClient
+from my_model.user_scoped_models import APIClient
 
 
 @fixture

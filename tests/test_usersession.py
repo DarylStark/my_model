@@ -1,5 +1,5 @@
-from pytest import fixture, raises
-from my_model.usersession import UserSession
+from pytest import fixture
+from my_model.user_scoped_models import UserSession
 
 
 @fixture

@@ -1,9 +1,6 @@
-from datetime import datetime
-
-from pyotp import TOTP
 from pytest import fixture, raises
 
-from my_model.api_token import APIToken
+from my_model.user_scoped_models import APIToken
 
 
 @fixture

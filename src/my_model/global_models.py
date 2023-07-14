@@ -1,15 +1,19 @@
-"""Module that contains the class for a API clients."""
+"""Module that contains the classes for global models.
 
-from pydantic import Field
-from ._model import Model
+These models are _not_ user scoped and are used by the application itself.
+"""
+
+from sqlmodel import Field
+
+from .my_model import MyModel
 
 
-class APIScope(Model):
+class APIScope(MyModel, table=True):
     """Model for API scopes.
 
     Attributes:
-        module: the module for the API scope
-        subject: the subject for the API scope
+        module: the module for the API scope.
+        subject: the subject for the API scope.
     """
 
     module: str = Field(max_length=32)
