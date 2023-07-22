@@ -217,6 +217,7 @@ class APIClient(TokenModel, table=True):
 
     # Relationships
     user: User = Relationship(back_populates='api_clients')
+    api_tokens: list['APIToken'] = Relationship(back_populates='api_client')
 
 
 class APIToken(TokenModel, table=True):
@@ -225,6 +226,8 @@ class APIToken(TokenModel, table=True):
     Attributes:
         created: the datetime when this token was created.
         expires: the datetime when this token will expire.
+        api_client_id: the API Client for this token. This field is optional
+            because
         enabled: defines it the token is enabled.
         title: the title for the token.
         user: the user object for the owner.
@@ -232,11 +235,13 @@ class APIToken(TokenModel, table=True):
 
     created: datetime = Field(default_factory=datetime.utcnow)
     expires: datetime = Field(default_factory=datetime.utcnow)
+    api_client_id: int | None = Field(default=None, foreign_key='apiclient.id')
     enabled: bool = True
     title: str = Field(max_length=64)
 
     # Relationships
     user: User = Relationship(back_populates='api_tokens')
+    api_client: APIClient = Relationship(back_populates='api_tokens')
 
 
 class Tag(UserScopedModel, table=True):
