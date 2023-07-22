@@ -50,7 +50,7 @@ class User(MyModel, table=True):
         api_clients: a list of API clients for this user.
         api_tokens: a list of API tokens for this user.
         tags: a list of tags for this user.
-        webuisettings: a list of Web UI settings for this user.
+        user_settings: a list of settings for this user.
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
@@ -69,7 +69,7 @@ class User(MyModel, table=True):
     api_clients: list['APIClient'] = Relationship(back_populates='user')
     api_tokens: list['APIToken'] = Relationship(back_populates='user')
     tags: list['Tag'] = Relationship(back_populates='user')
-    webuisettings: list['WebUISetting'] = Relationship(back_populates='user')
+    user_settings: list['UserSetting'] = Relationship(back_populates='user')
 
     @validate_arguments
     def set_password(self, password: str) -> None:
@@ -267,15 +267,16 @@ class Tag(UserScopedModel, table=True):
     user: User = Relationship(back_populates='tags')
 
 
-class WebUISetting(UserScopedModel, table=True):
-    """Model for Web UI Settings.
+class UserSetting(UserScopedModel, table=True):
+    """Model for User Settings.
 
-    The Web UI Settings model should be used by Web UIs that use this model to
-    set specific settings, like themes and notification settings.
+    The User Settings model should be used by services that use this model to
+    set specific settings, like themes, notification settings or other user
+    specific settings. Should be used as a key/value store.
 
     Attributes:
-        setting: the name of the setting
-        value: the value for the setting
+        setting: the name of the setting.
+        value: the value for the setting.
         user: the user object for the owner.
     """
 
@@ -283,4 +284,4 @@ class WebUISetting(UserScopedModel, table=True):
     value: str = Field(max_length=32)
 
     # Relationships
-    user: User = Relationship(back_populates='webuisettings')
+    user: User = Relationship(back_populates='user_settings')

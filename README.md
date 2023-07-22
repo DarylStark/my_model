@@ -13,7 +13,7 @@ The following models are created:
     -   API client
     -   API scope
     -   API token
--   For Web UI services
-    -   Web UI setting
+-   For client services
+    -   User Settings
 -   For different services that use authentication
     -   User session
