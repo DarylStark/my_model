@@ -25,11 +25,13 @@ class UserRole(int, Enum):
 
     Attributes:
         ROOT: for root users; users with god-mode permissions.
+        SERVICE: for service accounts.
         USER: normal users
     """
 
     ROOT = 1
-    USER = 2
+    SERVICE = 2
+    USER = 3
 
 
 class User(MyModel, table=True):
