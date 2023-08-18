@@ -8,9 +8,24 @@ on:
         default: false
         description: Determines if the workflow should continue when the Code Quality check fails
 jobs:
+  test-poetry-lock-file:
+    name: Test `poetry` lock file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Check `lock` file for inconsistensies
+        run: poetry lock --check
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
+    needs: test-poetry-lock-file
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -27,6 +42,7 @@ jobs:
   code-quality:
     name: Code quality
     runs-on: ubuntu-latest
+    needs: test-poetry-lock-file
     continue-on-error: ${{ inputs.code-quality-may-fail }}
     steps:
       - name: Checkout the repository
