@@ -23,7 +23,7 @@ jobs:
       - name: Install main and dev requirements
         run: poetry install --with dev
       - name: Run unit tests
-        run: pytest
+        run: poetry run pytest
   code-quality:
     name: Code quality
     runs-on: ubuntu-latest
@@ -38,12 +38,12 @@ jobs:
       - name: Install main and dev requirements
         run: poetry install --with dev
       - name: PyCodeStyle (source code)
-        run: pycodestyle --show-pep8 src/
+        run: poetry run pycodestyle --show-pep8 src/
       - name: PyLint (source code)
-        run: pylint src/
+        run: poetry run pylint src/
       - name: Flake8 (source code)
-        run: flake8 src/
+        run: poetry run flake8 src/
       - name: PyDocStyle (source code)
-        run: pydocstyle src/
+        run: poetry run pydocstyle src/
       - name: MyPy (source code)
-        run: mypy src/
+        run: poetry run mypy src/
