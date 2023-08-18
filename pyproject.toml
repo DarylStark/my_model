@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "my-model"
+name = "ds-my-model"
 version = "1.2.0-dev"
 description = "The data model for the My project"
 authors = ["Daryl Stark <daryl@dstark.nl>"]
