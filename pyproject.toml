@@ -41,7 +41,6 @@ sphinxcontrib-mermaid = "^0.9.2"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-
 [tool.bumpver]
 current_version = "1.2.0-dev"
 version_pattern = "MAJOR.MINOR.PATCH[-TAG]"
