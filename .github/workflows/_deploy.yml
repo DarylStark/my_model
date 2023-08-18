@@ -12,10 +12,12 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Install build requirements
-        run: pip3 install -r src/requirements-build.txt
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install main and dev requirements
+        run: poetry install --with dev
       - name: Create the distributable
-        run: python3 -m build
+        run: poetry build
       - name: Distribute the package
         shell: bash
-        run: mv dist/*.tar.gz ${{ secrets.repository_directory }}/my-model/
+        run: mv sdist/*.tar.gz ${{ secrets.repository_directory }}/my-model/
