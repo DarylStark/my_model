@@ -4,6 +4,10 @@ on:
   push:
     branches:
       main
+permissions: 
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   check-version:
@@ -23,3 +27,7 @@ jobs:
     needs: integration
     secrets:
       pypi_token: ${{ secrets.PYPI_TOKEN }}
+  publish-docs:
+    name: Publish docs
+    needs: build-and-deploy
+    uses: ./.github/workflows/_publish_docs.yml
