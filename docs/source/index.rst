@@ -11,9 +11,18 @@ Welcome to my-model's documentation!
    :caption: Contents:
    :hidden:
 
+   installation
    models
    global
    user_scoped
+
+.. toctree::
+   :caption: Developing
+   :hidden:
+   :maxdepth: 2
+
+   developing/setting_up
+   developing/development
 
 .. toctree::
    :caption: API documentation
