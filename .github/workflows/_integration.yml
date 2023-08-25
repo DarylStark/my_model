@@ -44,7 +44,7 @@ jobs:
       - name: Install main and dev requirements
         run: poetry install --with dev
       - name: Check versions
-        run: python3 tools/check-dependency-versions.py
+        run: poetry run python3 tools/check-dependency-versions.py
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
