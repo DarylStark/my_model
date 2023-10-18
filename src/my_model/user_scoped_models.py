@@ -20,7 +20,7 @@ from sqlmodel import Field, Relationship
 from .my_model import MyModel
 
 
-class UserRole(int, Enum):
+class UserRole(Enum):
     """The roles a user can have.
 
     Attributes:
