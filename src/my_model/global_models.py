@@ -8,7 +8,7 @@ from sqlmodel import Field
 from .my_model import MyModel
 
 
-class APIScope(MyModel):
+class APIScope(MyModel, table=True):
     """Model for API scopes.
 
     Attributes:

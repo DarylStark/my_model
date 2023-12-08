@@ -35,7 +35,7 @@ class UserRole(Enum):
     USER = 3
 
 
-class User(MyModel):
+class User(MyModel, table=True):
     """Model for Users.
 
     The user model is meant for local useraccounts.
@@ -194,7 +194,7 @@ class TokenModel(UserScopedModel):
         raise PermissionError('Token is already set')
 
 
-class APIClient(TokenModel):
+class APIClient(TokenModel, table=True):
     """Model for API clients.
 
     Attributes:
@@ -223,7 +223,7 @@ class APIClient(TokenModel):
     api_tokens: list['APIToken'] = Relationship(back_populates='api_client')
 
 
-class APIToken(TokenModel):
+class APIToken(TokenModel, table=True):
     """Model for API clients.
 
     Attributes:
@@ -247,7 +247,7 @@ class APIToken(TokenModel):
     api_client: APIClient = Relationship(back_populates='api_tokens')
 
 
-class Tag(UserScopedModel):
+class Tag(UserScopedModel, table=True):
     """Model for Tags.
 
     The tag model is meant to represent a tag. A tag can be given to a
@@ -270,7 +270,7 @@ class Tag(UserScopedModel):
     user: User = Relationship(back_populates='tags')
 
 
-class UserSetting(UserScopedModel):
+class UserSetting(UserScopedModel, table=True):
     """Model for User Settings.
 
     The User Settings model should be used by services that use this model to
