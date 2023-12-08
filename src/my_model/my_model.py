@@ -3,11 +3,11 @@
 import random
 import string
 
-from pydantic import validate_arguments
+from pydantic import ConfigDict, validate_call
 from sqlmodel import Field, SQLModel
 
 
-class MyModel(SQLModel):
+class MyModel(SQLModel, validate_assignment=True):
     """SQLmodel basemodel for all models.
 
     Should be used for all models. This base class defines the Pydantic
@@ -20,19 +20,21 @@ class MyModel(SQLModel):
     """
 
     id: int | None = Field(default=None, primary_key=True)
+    
+    model_config = ConfigDict(validate_assignment=True)
 
-    class Config:
-        """Config for the models.
+    # class Config:
+    #     """Config for the models.
 
-        Attributes:
-            validate_assignment: specifies if assigned values should be
-                validated by Pydantic. If this is set to False, only
-                assignments in the constructor are validated.
-        """
+    #     Attributes:
+    #         validate_assignment: specifies if assigned values should be
+    #             validated by Pydantic. If this is set to False, only
+    #             assignments in the constructor are validated.
+    #     """
 
-        validate_assignment = True
+    #     validate_assignment = True
 
-    @validate_arguments
+    @validate_call
     def get_random_string(self,
                           min_length: int,
                           max_length: int,
