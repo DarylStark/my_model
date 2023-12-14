@@ -22,6 +22,8 @@ class MyModel(SQLModel, validate_assignment=True):
     id: int | None = Field(default=None, primary_key=True)
     
     model_config = ConfigDict(validate_assignment=True)
+    
+    __pydantic_extra__ = None
 
     # class Config:
     #     """Config for the models.
