@@ -56,16 +56,21 @@ class User(MyModel, table=True):
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
-    fullname: str = Field(schema_extra={'pattern':r'^[A-Za-z0-9\- ]+$'}, max_length=128)
-    username: str = Field(schema_extra={'pattern':r'^[a-zA-Z][a-zA-Z0-9_\.]+$'}, max_length=128)
+    fullname: str = Field(schema_extra={'pattern': r'^[A-Za-z0-9\- ]+$'},
+                          max_length=128)
+    username: str = Field(
+        schema_extra={'pattern': r'^[a-zA-Z][a-zA-Z0-9_\.]+$'},
+        max_length=128)
     email: str = Field(
-        schema_extra={'pattern':r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$'}, max_length=128)
+        schema_extra={
+            'pattern': r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$'},
+        max_length=128)
     role: UserRole = Field(default=UserRole.USER)
     password_hash: str | None = None
     password_date: datetime = Field(default_factory=datetime.utcnow)
     second_factor: None | str = Field(
         default=None,
-        schema_extra={'pattern':r'^[A-Z0-9]+$'}, max_length=64)
+        schema_extra={'pattern': r'^[A-Z0-9]+$'}, max_length=64)
 
     # Relationships
     api_clients: list['APIClient'] = Relationship(back_populates='user')
@@ -161,7 +166,7 @@ class TokenModel(UserScopedModel):
         default=None,
         min_length=32,
         max_length=32,
-        schema_extra={'pattern':r'^[a-zA-Z0-9]{32}$'}
+        schema_extra={'pattern': r'^[a-zA-Z0-9]{32}$'}
     )
 
     @validate_call
@@ -214,7 +219,7 @@ class APIClient(TokenModel, table=True):
     app_publisher: str = Field(max_length=64)
     redirect_url: str | None = Field(
         default=None,
-        schema_extra={'pattern':'^https?://'},
+        schema_extra={'pattern': r'^https?://'},
         max_length=1024)
 
     # Relationships
@@ -263,7 +268,8 @@ class Tag(UserScopedModel, table=True):
 
     title: str = Field(max_length=128)
     color: str | None = Field(
-        default=None, schema_extra={'pattern':r'^[a-fA-F0-9]{6}$'}, min_length=6, max_length=6)
+        default=None, schema_extra={'pattern': r'^[a-fA-F0-9]{6}$'},
+        min_length=6, max_length=6)
 
     # Relationships
     user: User = Relationship(back_populates='tags')

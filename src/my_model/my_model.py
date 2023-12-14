@@ -3,11 +3,12 @@
 import random
 import string
 
-from pydantic import ConfigDict, validate_call
+from pydantic import validate_call
 from sqlmodel import Field, SQLModel
+from sqlmodel._compat import SQLModelConfig
 
 
-class MyModel(SQLModel, validate_assignment=True):
+class MyModel(SQLModel):
     """SQLmodel basemodel for all models.
 
     Should be used for all models. This base class defines the Pydantic
@@ -20,21 +21,8 @@ class MyModel(SQLModel, validate_assignment=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    
-    model_config = ConfigDict(validate_assignment=True)
-    
+    model_config = SQLModelConfig(validate_assignment=True)
     __pydantic_extra__ = None
-
-    # class Config:
-    #     """Config for the models.
-
-    #     Attributes:
-    #         validate_assignment: specifies if assigned values should be
-    #             validated by Pydantic. If this is set to False, only
-    #             assignments in the constructor are validated.
-    #     """
-
-    #     validate_assignment = True
 
     @validate_call
     def get_random_string(self,
@@ -48,7 +36,8 @@ class MyModel(SQLModel, validate_assignment=True):
         secrets. The min_length and max_length arguments can be used to set the
         size limits for the random string. The method will create a string of
         random length within these limits. If you need a specific length, make
-        sure that both min_length and max_length are of equal value.
+        sure that both min_length and max_length are of equal val23
+        ue.
 
         Args:
             min_length: the minimum length of the generated random string
