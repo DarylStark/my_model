@@ -16,7 +16,6 @@ from argon2.exceptions import VerifyMismatchError
 from pydantic import validate_call
 from pyotp import TOTP, random_base32
 from sqlmodel import Field, Relationship
-from pydantic import Field as Field2
 
 from .my_model import MyModel
 
@@ -35,7 +34,7 @@ class UserRole(Enum):
     USER = 3
 
 
-class User(MyModel, table=True):
+class User(MyModel):
     """Model for Users.
 
     The user model is meant for local useraccounts.
@@ -57,16 +56,16 @@ class User(MyModel, table=True):
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
-    fullname: str = Field2(pattern=r'^[A-Za-z0-9\- ]+$', max_length=128)
-    username: str = Field2(pattern=r'^[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
-    email: str = Field2(
-        pattern=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
+    fullname: str = Field(schema_extra={'pattern':r'^[A-Za-z0-9\- ]+$'}, max_length=128)
+    username: str = Field(schema_extra={'pattern':r'^[a-zA-Z][a-zA-Z0-9_\.]+$'}, max_length=128)
+    email: str = Field(
+        schema_extra={'pattern':r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$'}, max_length=128)
     role: UserRole = Field(default=UserRole.USER)
     password_hash: str | None = None
     password_date: datetime = Field(default_factory=datetime.utcnow)
-    second_factor: None | str = Field2(
+    second_factor: None | str = Field(
         default=None,
-        pattern=r'^[A-Z0-9]+$', max_length=64)
+        schema_extra={'pattern':r'^[A-Z0-9]+$'}, max_length=64)
 
     # Relationships
     api_clients: list['APIClient'] = Relationship(back_populates='user')
@@ -158,11 +157,11 @@ class TokenModel(UserScopedModel):
         token: the token for the object
     """
 
-    token: str | None = Field2(
+    token: str | None = Field(
         default=None,
         min_length=32,
         max_length=32,
-        pattern='^[a-zA-Z0-9]{32}$'
+        schema_extra={'pattern':r'^[a-zA-Z0-9]{32}$'}
     )
 
     @validate_call
@@ -194,7 +193,7 @@ class TokenModel(UserScopedModel):
         raise PermissionError('Token is already set')
 
 
-class APIClient(TokenModel, table=True):
+class APIClient(TokenModel):
     """Model for API clients.
 
     Attributes:
@@ -213,9 +212,9 @@ class APIClient(TokenModel, table=True):
     enabled: bool = True
     app_name: str = Field(max_length=64)
     app_publisher: str = Field(max_length=64)
-    redirect_url: str | None = Field2(
+    redirect_url: str | None = Field(
         default=None,
-        pattern='^https?://',
+        schema_extra={'pattern':'^https?://'},
         max_length=1024)
 
     # Relationships
@@ -223,7 +222,7 @@ class APIClient(TokenModel, table=True):
     api_tokens: list['APIToken'] = Relationship(back_populates='api_client')
 
 
-class APIToken(TokenModel, table=True):
+class APIToken(TokenModel):
     """Model for API clients.
 
     Attributes:
@@ -247,7 +246,7 @@ class APIToken(TokenModel, table=True):
     api_client: APIClient = Relationship(back_populates='api_tokens')
 
 
-class Tag(UserScopedModel, table=True):
+class Tag(UserScopedModel):
     """Model for Tags.
 
     The tag model is meant to represent a tag. A tag can be given to a
@@ -263,14 +262,14 @@ class Tag(UserScopedModel, table=True):
     """
 
     title: str = Field(max_length=128)
-    color: str | None = Field2(
-        default=None, pattern=r'^[a-fA-F0-9]{6}$', min_length=6, max_length=6)
+    color: str | None = Field(
+        default=None, schema_extra={'pattern':r'^[a-fA-F0-9]{6}$'}, min_length=6, max_length=6)
 
     # Relationships
     user: User = Relationship(back_populates='tags')
 
 
-class UserSetting(UserScopedModel, table=True):
+class UserSetting(UserScopedModel):
     """Model for User Settings.
 
     The User Settings model should be used by services that use this model to
