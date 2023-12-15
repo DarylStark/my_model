@@ -13,7 +13,7 @@ from enum import Enum
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from pydantic import validate_arguments
+from pydantic import validate_call
 from pyotp import TOTP, random_base32
 from sqlmodel import Field, Relationship
 
@@ -56,16 +56,21 @@ class User(MyModel, table=True):
     """
 
     created: datetime = Field(default_factory=datetime.utcnow)
-    fullname: str = Field(regex=r'^[A-Za-z0-9\- ]+$', max_length=128)
-    username: str = Field(regex=r'^[a-zA-Z][a-zA-Z0-9_\.]+$', max_length=128)
+    fullname: str = Field(schema_extra={'pattern': r'^[A-Za-z0-9\- ]+$'},
+                          max_length=128)
+    username: str = Field(
+        schema_extra={'pattern': r'^[a-zA-Z][a-zA-Z0-9_\.]+$'},
+        max_length=128)
     email: str = Field(
-        regex=r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$', max_length=128)
+        schema_extra={
+            'pattern': r'^[a-z0-9_\-\.]+\@[a-z0-9_\-\.]+\.[a-z\.]+$'},
+        max_length=128)
     role: UserRole = Field(default=UserRole.USER)
     password_hash: str | None = None
     password_date: datetime = Field(default_factory=datetime.utcnow)
     second_factor: None | str = Field(
         default=None,
-        regex=r'^[A-Z0-9]+$', max_length=64)
+        schema_extra={'pattern': r'^[A-Z0-9]+$'}, max_length=64)
 
     # Relationships
     api_clients: list['APIClient'] = Relationship(back_populates='user')
@@ -73,7 +78,7 @@ class User(MyModel, table=True):
     tags: list['Tag'] = Relationship(back_populates='user')
     user_settings: list['UserSetting'] = Relationship(back_populates='user')
 
-    @validate_arguments
+    @validate_call
     def set_password(self, password: str) -> None:
         """Set the password for the user.
 
@@ -84,7 +89,7 @@ class User(MyModel, table=True):
         self.password_hash = hasher.hash(password)
         self.password_date = datetime.utcnow()
 
-    @validate_arguments
+    @validate_call
     def set_random_second_factor(self) -> str:
         """Set a random second factor secret for the user.
 
@@ -94,12 +99,12 @@ class User(MyModel, table=True):
         self.second_factor = random_base32()
         return self.second_factor
 
-    @validate_arguments
+    @validate_call
     def disable_second_factor(self) -> None:
         """Disable the second factor for the user."""
         self.second_factor = None
 
-    @validate_arguments
+    @validate_call
     def verify_credentials(self,
                            username: str,
                            password: str,
@@ -161,10 +166,10 @@ class TokenModel(UserScopedModel):
         default=None,
         min_length=32,
         max_length=32,
-        regex='^[a-zA-Z0-9]{32}$'
+        schema_extra={'pattern': r'^[a-zA-Z0-9]{32}$'}
     )
 
-    @validate_arguments
+    @validate_call
     def set_random_token(self, force: bool = False) -> str:
         """Set a random generated token.
 
@@ -214,7 +219,7 @@ class APIClient(TokenModel, table=True):
     app_publisher: str = Field(max_length=64)
     redirect_url: str | None = Field(
         default=None,
-        regex='^https?://',
+        schema_extra={'pattern': r'^https?://'},
         max_length=1024)
 
     # Relationships
@@ -263,7 +268,8 @@ class Tag(UserScopedModel, table=True):
 
     title: str = Field(max_length=128)
     color: str | None = Field(
-        default=None, regex=r'^[a-fA-F0-9]{6}$', min_length=6, max_length=6)
+        default=None, schema_extra={'pattern': r'^[a-fA-F0-9]{6}$'},
+        min_length=6, max_length=6)
 
     # Relationships
     user: User = Relationship(back_populates='tags')
