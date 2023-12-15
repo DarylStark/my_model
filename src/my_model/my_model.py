@@ -22,7 +22,7 @@ class MyModel(SQLModel):
 
     id: int | None = Field(default=None, primary_key=True)
     model_config = SQLModelConfig(validate_assignment=True)
-    
+
     # The `__pydantic_extra__` attribute is set to None, just to make sure the
     # library can find this attribute. It may be unneeded in future versions of
     # SQLmodel, but right now, in version `0.0.14`, is is needed or it will
