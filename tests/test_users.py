@@ -118,6 +118,15 @@ def test_user_correct_credentials(example_user_no_second_factor: User):
         second_factor=TOTP(otp_secret).now()), "Credential verification failed (with second factor)"
 
 
+def test_disabling_second_factor(example_user_no_second_factor: User):
+    """Test if we can disable the second factor."""
+    # Create a OTP for the user
+    otp_secret = example_user_no_second_factor.set_random_second_factor()
+    assert otp_secret is not None
+    example_user_no_second_factor.disable_second_factor()
+    assert example_user_no_second_factor.second_factor is None
+
+
 def test_user_incorrect_credentials(example_user_no_second_factor: User):
     """ Test if wrong credentials result in error """
 
@@ -134,3 +143,11 @@ def test_user_incorrect_credentials(example_user_no_second_factor: User):
         username='fake.user',
         password='testtest',
         second_factor='alsowrong'), "Credential didn't fail when they should've (with second factor)"
+
+
+def test_user_no_password(example_user_no_second_factor: User) -> None:
+    """Test wrong credentials if no password is set."""
+    example_user_no_second_factor.password_hash = None
+    assert not example_user_no_second_factor.verify_credentials(
+        username='fake.user',
+        password='testtest')
