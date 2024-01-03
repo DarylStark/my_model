@@ -1,27 +1,57 @@
+"""Tests fir Tags."""
+# pylint: disable=redefined-outer-name
 from pytest import fixture, raises
+import pytest
 
-from my_model.user_scoped_models import Tag
+from my_model.user_scoped_models import Tag  # type:ignore
 
 
 @fixture
 def example_tag() -> Tag:
+    """Fixture that creates a Tag object.
+
+    Returns:
+        The created Tag object.
+    """
     tag = Tag(title='testtoken')
     return tag
 
 
-def test_tag_color_regex(example_tag: Tag) -> None:
-    """ Unit test to test the regex for the color """
+@pytest.mark.parametrize('invalid_color', [
+    'red',
+    'green',
+    'blue',
+    'fff',
+    '9090hj'
+])
+def test_tag_invalid_color_regex(
+        example_tag: Tag,
+        invalid_color: str) -> None:
+    """Unit test to test invalid color.
+
+    Args:
+        example_tag: a tag object for the test.
+        invalid_color: the color to test.
+    """
 
     # Invalid colors
     with raises(ValueError):
-        example_tag.color = 'red'
-        example_tag.color = 'green'
-        example_tag.color = 'blue'
-        example_tag.color = 'fff'
-        example_tag.color = '9090hj'
+        example_tag.color = invalid_color
 
-    # Valid colors
-    example_tag.color = '00ff00'
-    example_tag.color = '1590fc'
-    example_tag.color = '1590FC'
-    example_tag.color = 'FFFFFF'
+
+@pytest.mark.parametrize('valid_color', [
+    '00ff00',
+    '1590fc',
+    '1590FC',
+    'FFFFFF'
+])
+def test_tag_valid_color_regex(
+        example_tag: Tag,
+        valid_color: str) -> None:
+    """Unit test to test valid colors.
+
+    Args:
+        example_tag: a tag object for the test.
+        valid_color: the color to test.
+    """
+    example_tag.color = valid_color
