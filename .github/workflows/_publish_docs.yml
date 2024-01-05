@@ -17,7 +17,6 @@ jobs:
         run: |
           poetry install
           poetry install --group doc
-        run: poetry install
       - name: Sphinx build
         run: poetry run sphinx-build docs/source docs/build
       - name: Setup Pages
