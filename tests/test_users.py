@@ -6,7 +6,7 @@ from pyotp import TOTP
 from pytest import fixture, raises
 import pytest
 
-from my_model.user_scoped_models import User  # type:ignore
+from my_model.user_scoped_models import User
 
 
 @fixture

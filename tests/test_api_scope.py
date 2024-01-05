@@ -2,7 +2,7 @@
 # pylint: disable=redefined-outer-name
 from pytest import fixture
 
-from my_model.global_models import APIScope  # type:ignore
+from my_model.global_models import APIScope
 
 
 @fixture

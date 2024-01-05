@@ -3,7 +3,7 @@
 from pytest import fixture, raises
 import pytest
 
-from my_model.user_scoped_models import APIClient  # type:ignore
+from my_model.user_scoped_models import APIClient
 
 
 @fixture
