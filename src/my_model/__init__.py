@@ -8,4 +8,7 @@ The models in this package use the SQLModel class as baseclass so that the
 complete validation of Pydantic can be used, and the ORM database structure
 of SQLalchemy can be used, without having to use two seperate data schemas.
 """
-__version__ = '1.3.2'
+
+from .model import *  # noqa: F401, F403
+
+__version__ = '1.3.3-dev'

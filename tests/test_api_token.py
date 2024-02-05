@@ -3,7 +3,7 @@
 from pytest import fixture, raises
 import pytest
 
-from my_model.user_scoped_models import APIToken
+from my_model import APIToken
 
 
 @fixture
