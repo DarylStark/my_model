@@ -207,7 +207,7 @@ class User(MyModel, table=True):
         return credentials
 
 
-class APITokenScope(MyModel, table=True):
+class APITokenScope(SQLModel, table=True):
     """Link table to connect API tokens to API scopes.
 
     Attributes:
