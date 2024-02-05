@@ -3,7 +3,7 @@
 
 import pytest
 
-from my_model.my_model import MyModel
+from my_model import MyModel
 
 
 @pytest.mark.parametrize(

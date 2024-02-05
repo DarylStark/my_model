@@ -1,4 +1,4 @@
-"""Module that contains the class for a user scoped models.
+"""Module that contains the classes for all models.
 
 This module contains the classes for models that are specific for a user, like
 the User model itself and models that are created within the user namespace.
@@ -6,8 +6,14 @@ Examples for these models are API Tokens and Tags. To make sure we don't have
 any code duplication, we use specific base classes: UserScopedModel for models
 that are namespaced within a User and TokenModel for models that contain a
 token of some sort.
+
+There are also some classes that are used to link models together, like
+APITokenScope, which is used to link API Tokens to API Scopes. To get this
+working, we have to define the APIScope model in this module too.
 """
 
+import random
+import string
 from datetime import datetime
 from enum import Enum
 
@@ -15,9 +21,72 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from pydantic import validate_call
 from pyotp import TOTP, random_base32
-from sqlmodel import Field, Relationship
+from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel._compat import SQLModelConfig
 
-from .my_model import MyModel
+# from .global_models import APIScope, APITokenScope
+# from .my_model import MyModel
+
+
+class MyModel(SQLModel):
+    """SQLmodel basemodel for all models.
+
+    Should be used for all models. This base class defines the Pydantic
+    configuration that all models should use. Because we use SQLmodel, these
+    models are usable for generic modeling _and_ for SQLalchemy ORM.
+
+    Attributes:
+        id: the unique ID for this object. If this object is used for a SQL
+            database, it is the primary key.
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    model_config = SQLModelConfig(validate_assignment=True)
+
+    # The `__pydantic_extra__` attribute is set to None, just to make sure the
+    # library can find this attribute. It may be unneeded in future versions of
+    # SQLmodel, but right now, in version `0.0.14`, is is needed or it will
+    # trigger a error.
+    __pydantic_extra__ = None
+
+    @validate_call
+    def get_random_string(self,
+                          min_length: int,
+                          max_length: int,
+                          include_punctation: bool = True) -> str:
+        """
+        Return a random generated string.
+
+        Can be used to generate a random string for tokens, passwords or other
+        secrets. The min_length and max_length arguments can be used to set the
+        size limits for the random string. The method will create a string of
+        random length within these limits. If you need a specific length, make
+        sure that both min_length and max_length are of equal val23
+        ue.
+
+        Args:
+            min_length: the minimum length of the generated random string
+            max_length: the maximum length of the generated random string
+            include_punctation: defines if punctation should be used
+
+        Returns:
+            A string with the randomly generated characters.
+        """
+        # Create the characterset
+        characters = string.ascii_letters
+        characters += string.digits
+
+        if include_punctation:
+            characters += string.punctuation
+
+        # Create the random character string
+        length = random.randint(min_length, max_length)
+        random_token_chars = [random.choice(characters)
+                              for i in range(0, length)]
+        random_string = ''.join(random_token_chars)
+
+        # Return the created string
+        return random_string
 
 
 class UserRole(Enum):
@@ -138,6 +207,48 @@ class User(MyModel, table=True):
         return credentials
 
 
+class APITokenScope(MyModel, table=True):
+    """Link table to connect API tokens to API scopes.
+
+    Attributes:
+        api_token_id: the ID for the API token.
+        api_scope_id: the ID for the API scope.
+    """
+
+    api_token_id: int = Field(
+        default=None, foreign_key='apitoken.id', primary_key=True)
+    api_scope_id: str = Field(
+        default=None, foreign_key="apiscope.id", primary_key=True)
+
+
+class APIScope(MyModel, table=True):
+    """Model for API scopes.
+
+    Attributes:
+        module: the module for the API scope.
+        subject: the subject for the API scope.
+    """
+
+    module: str = Field(max_length=32)
+    subject: str = Field(max_length=32)
+
+    # Relationships
+    api_tokens: list['APIToken'] = Relationship(
+        back_populates='token_scopes',
+        link_model=APITokenScope)
+
+    @property
+    def full_scope_name(self) -> str:
+        """Property for the full scope name.
+
+        Returns the complete scope name for this scope.
+
+        Returns:
+            The full scope name as string.
+        """
+        return f'{self.module}.{self.subject}'
+
+
 class UserScopedModel(MyModel):
     """Basemodel for models that are user scoped.
 
@@ -249,6 +360,9 @@ class APIToken(TokenModel, table=True):
     # Relationships
     user: User = Relationship(back_populates='api_tokens')
     api_client: APIClient = Relationship(back_populates='api_tokens')
+    token_scopes: list[APIScope] = Relationship(
+        back_populates='api_tokens',
+        link_model=APITokenScope)
 
 
 class Tag(UserScopedModel, table=True):
